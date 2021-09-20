@@ -4,6 +4,8 @@
 
 package edu.neu.coe.info6205.randomwalk;
 
+import java.util.ArrayList;
+import java.util.List;
 import java.util.Random;
 
 public class RandomWalk {
@@ -20,7 +22,8 @@ public class RandomWalk {
      * @param dy the distance he moves in the y direction
      */
     private void move(int dx, int dy) {
-        // TO BE IMPLEMENTED
+        this.x += dx;
+        this.y += dy;
     }
 
     /**
@@ -29,7 +32,9 @@ public class RandomWalk {
      * @param m the number of steps the drunkard takes
      */
     private void randomWalk(int m) {
-        // TO BE IMPLEMENTED
+        while(m-->0){
+            randomMove();
+        }
     }
 
     /**
@@ -48,8 +53,7 @@ public class RandomWalk {
      * @return the (Euclidean) distance from the origin to the current position.
      */
     public double distance() {
-        // TO BE IMPLEMENTED
-        return 0;
+        return Math.sqrt(Math.pow(x,2) + Math.pow(y,2));
     }
 
     /**
@@ -72,11 +76,28 @@ public class RandomWalk {
     public static void main(String[] args) {
         if (args.length == 0)
             throw new RuntimeException("Syntax: RandomWalk steps [experiments]");
-        int m = Integer.parseInt(args[0]);
-        int n = 30;
-        if (args.length > 1) n = Integer.parseInt(args[1]);
-        double meanDistance = randomWalkMulti(m, n);
-        System.out.println(m + " steps: " + meanDistance + " over " + n + " experiments");
+
+        List<Double> list = new ArrayList<Double>();// list for plotting
+        List<Double> sqroot = new ArrayList<Double>();// list for plotting
+        List<Integer> numbers = new ArrayList<Integer>();// list for plotting
+        for( String arg : args){
+            int m = Integer.parseInt(arg);
+            int count =10;
+            double totalMeanDistance = 0d;
+            while(count-- >0) {
+                int n = 30;
+                double meanDistance = randomWalkMulti(m, n);
+                totalMeanDistance += meanDistance;
+                System.out.println(" Count : " + count + " " +  m + " steps: with distance : " + meanDistance + " over " + n + " experiments");
+            }
+            list.add(totalMeanDistance/10);// list for plotting
+            numbers.add(m);// list for plotting
+            sqroot.add(Math.sqrt(m));// list for plotting
+        }
+
+        System.out.println(list);// list for plotting
+        System.out.println(numbers);// list for plotting
+        System.out.println(sqroot);// list for plotting
     }
 
 }
