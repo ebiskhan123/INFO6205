@@ -11,15 +11,24 @@ public class BenchmarkAssignment2 {
 
     private static Benchmark_Timer<Integer[]> btm;
 
+    public static Double log2(Double x)
+    {
+        return  Math.log(x) ;
+    }
+
+
     public static void main(String[] args) {
         btm = new Benchmark_Timer<Integer[]>("Insertion Sort",(x)-> new InsertionSort().sort(x,true));
         List<Double> sortedList = new ArrayList<Double>();
         List<Double> reversedList = new ArrayList<Double>();
         List<Double> partiallySortedList = new ArrayList<Double>();
         List<Double> randomList = new ArrayList<Double>();
-        for( int i = 200; i <= 3200 ; i*=2){
-            Integer[] baseArr = new Integer[i];
 
+        List<Integer> nList = new ArrayList<Integer>();
+
+        for( int i = 100; i <= 6400 ; i*=2){
+            Integer[] baseArr = new Integer[i];
+            nList.add(i);
 
             for(int j = 0 ; j < i ; j++){
                 baseArr[j] = j;
@@ -59,7 +68,7 @@ public class BenchmarkAssignment2 {
 
             sortedList.add(avgTimeTakenSorted);
             randomList.add(avgTimeTakenRandom);
-            partiallySortedList.add(avgTimeTakenSorted);
+            partiallySortedList.add(avgTimeTakenPartial);
             reversedList.add(avgTimeTakenReversed);
             System.out.println("Average time to sort a sorted array  of size " + i + " is : " + avgTimeTakenSorted);
             System.out.println("Average time to sort a reversed array  of size " + i + " is : " + avgTimeTakenReversed);
@@ -68,7 +77,7 @@ public class BenchmarkAssignment2 {
 
 
         }
-
+        System.out.println("List of size of N : " + nList);
         System.out.println("Sorted Time List :" + sortedList);
         System.out.println("Reversed Time List :" + reversedList);
         System.out.println("Partially Sorted Time List :" + partiallySortedList);
